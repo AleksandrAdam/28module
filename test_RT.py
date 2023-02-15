@@ -176,7 +176,7 @@ def test_007(selenium):
 
     assert final_h.text == 'Восстановление пароля'
 
-### 12. Для тест-кейса TC-rt-011. Проверка получения временного кода на телефон
+### 12. Для тест-кейса TC-rt-011. Проверка получения временного кода на телефон в системе Старт WEB
 def test_011_phone(selenium):
     form = Code(selenium)
 
@@ -189,7 +189,7 @@ def test_011_phone(selenium):
 
     assert rt_code
 
-    ### 13. Для тест-кейса TC-rt-011. Проверка получения временного кода на электронную почту
+    ### 13. Для тест-кейса TC-rt-011. Проверка получения временного кода на электронную почту в системе Старт WEB
 def test_011_email(selenium):
     form = Code(selenium)
 
@@ -202,5 +202,29 @@ def test_011_email(selenium):
 
     assert rt_code
 
+### 14. Для тест-кейса TC-rt-015. Проверка получения временного кода на электронную почту в системе KEY WEB
+def test_011_email(selenium):
+    form = Code2(selenium)
 
+    # ввод номера телефона
+    form.address.send_keys(valid_email)
+    sleep(30)
+    form.get_click()
+
+    rt_code = form.driver.find_element(By.ID, 'rt-code-0')
+
+    assert rt_code
+  
+### 15. Для тест-кейса TC-rt-015. Проверка получения временного кода на телефон в системе KEY WEB
+def test_011_phone(selenium):
+    form = Code2(selenium)
+
+    # ввод номера телефона
+    form.address.send_keys(valid_phone)
+    sleep(30)
+    form.get_click()
+
+    rt_code = form.driver.find_element(By.ID, 'rt-code-0')
+
+    assert rt_code
 
