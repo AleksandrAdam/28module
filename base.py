@@ -19,16 +19,16 @@ class Auth(Base):
     def __init__(self, driver, timeout=5):
         super().__init__(driver, timeout)
         url = 'https://b2c.passport.rt.ru/auth/realms/b2c/protocol/openid-connect/auth?client_id=account_b2c' \
-              '&redirect_uri=https://b2c.passport.rt.ru/account_b2c/login&response_type=code&scope=openid& '
+              '&redirect_uri=https://b2c.passport.rt.ru/account_b2c/login&response_type=code&scope=openid&state=bcb46fbe-82a3-4a41-b148-cf65dafec734&theme&auth_type'
 
         driver.get(url)
 
         self.username = driver.find_element(By.ID, "username")
         self.password = driver.find_element(By.ID, "password")
         self.auth_btn = driver.find_element(By.ID, "kc-login")
-        self.forgot = driver.find_element(By.ID, "forgot_password")
+        self.forgotpass = driver.find_element(By.ID, "forgot_password")
         self.register = driver.find_element(By.ID, 'kc-register')
-        self.placeholder = driver.find_element(By.XPATH, '//*[@id="page-right"]/div/div/div/form/div[1]/div[2]/div/span[2]')
+        self.place = driver.find_element(By.XPATH, '//*[@id="page-right"]/div/div/div/form/div[1]/div[2]/div/span[2]')
 
  
     def btn_click(self):
