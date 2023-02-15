@@ -55,3 +55,17 @@ class Code(Base):
 
     def get_click(self):
         self.code_btn.click()
+        
+class Code2(Base):
+    def __init__(self, driver, timeout=5):
+        super().__init__(driver, timeout)
+        url = 'https://b2c.passport.rt.ru/auth/realms/b2c/protocol/openid-connect/auth?client_id=lk_dmh&redirect_uri=https://sso.key.rt.ru/api/v1/oauth2/b2c/callback'\
+              '&response_type=code&state=aHR0cHM6Ly9rZXkucnQucnUvbWFpbi9zaWduaW4/dD0xNjc2NDkxMzk3MjQ5'
+
+        driver.get(url)
+
+        self.address = driver.find_element(By.ID, "address")
+        self.code_btn = driver.find_element(By.ID, "otp_get_code")
+
+    def get_click(self):
+        self.code_btn.click()
