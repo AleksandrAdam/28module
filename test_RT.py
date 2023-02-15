@@ -1,6 +1,3 @@
-# python -m pytest -v --driver Chrome --driver-path chromedriver.exe test_SF_RT_passport.py
-
-
 from time import sleep
 from base_data import *
 from data import *
@@ -155,23 +152,49 @@ def test_002(selenium):
 
     assert form.placeholder.text == 'Мобильный телефон'
  
+### 10. Для тест-кейса TC-rt-006. Проверка перехода в форму регистрации
+def test_006(selenium):
+    form = AuthForm(selenium)
 
+    # "Зарегистрироваться"
+    form.register.click()
+    sleep(5)
 
+    final_h = form.driver.find_element(By.XPATH, '//*[@id="page-right"]/div/div/h1')
 
+    assert final_h.text == 'Регистрация'
 
+### 11. Для тест-кейса TC-rt-007. Проверка перехода в форму восстановления
+def test_007(selenium):
+    form = AuthForm(selenium)
 
+    # "Забыл пароль"
+    form.forgot.click()
+    sleep(5)
 
+    final_h = form.driver.find_element(By.XPATH, '//*[@id="page-right"]/div/div/h1')
 
+    assert final_h.text == 'Восстановление пароля'
 
-
-### тест EXP-016 - проверка получения временного кода на телефон и открытия формы для ввода кода
-def test_016_get_code(selenium):
+### 12. Для тест-кейса TC-rt-011. Проверка получения временного кода на телефон
+def test_011_phone(selenium):
     form = CodeForm(selenium)
 
-    # ввод телефона
+    # ввод номера телефона
     form.address.send_keys(valid_phone)
+    sleep(30)
+    form.get_click()
 
-    # длительная пауза предназначена для ручного ввода капчи при необходимости
+    rt_code = form.driver.find_element(By.ID, 'rt-code-0')
+
+    assert rt_code
+
+    ### 13. Для тест-кейса TC-rt-011. Проверка получения временного кода на электронную почту
+def test_011_email(selenium):
+    form = CodeForm(selenium)
+
+    # ввод номера телефона
+    form.address.send_keys(valid_email)
     sleep(30)
     form.get_click()
 
@@ -180,27 +203,4 @@ def test_016_get_code(selenium):
     assert rt_code
 
 
-### тест EXP-020 - проверка перехода в форму восстановления пароля и её открытия
-def test_020_forgot_pass(selenium):
-    form = AuthForm(selenium)
 
-    # клик по надписи "Забыл пароль"
-    form.forgot.click()
-    sleep(5)
-
-    reset_pass = form.driver.find_element(By.XPATH, '//*[@id="page-right"]/div/div/h1')
-
-    assert reset_pass.text == 'Восстановление пароля'
-
-
-### тест EXP-021 - проверка перехода в форму регистрации и её открытия
-def test_021_register(selenium):
-    form = AuthForm(selenium)
-
-    # клик по надписи "Зарегистрироваться"
-    form.register.click()
-    sleep(5)
-
-    reset_pass = form.driver.find_element(By.XPATH, '//*[@id="page-right"]/div/div/h1')
-
-    assert reset_pass.text == 'Регистрация'
